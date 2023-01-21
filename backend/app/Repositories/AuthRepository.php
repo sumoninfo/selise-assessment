@@ -3,11 +3,13 @@
 namespace App\Repositories;
 
 use App\Http\Resources\AuthUserResource;
+use App\Models\RefreshToken;
 use App\Models\User;
 use App\Repositories\Interfaces\AuthRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthRepository implements AuthRepositoryInterface
 {
@@ -29,14 +31,27 @@ class AuthRepository implements AuthRepositoryInterface
      */
     public function login(Request $request): array
     {
-        $user  = $request->user();
+        $user         = $request->user();
+        $refreshToken = Str::random(30);
+
         $token = $user->createToken('appToken', [], $this->tokenExpiresAt());
+        self::makeRefreshToken($user->id, $token->accessToken->id, $refreshToken);
         return [
-            'access_token' => $token->plainTextToken,
-            'token_type'   => 'Bearer',
-            'expires_at'   => $token->accessToken['expires_at'],
-            'user'         => new AuthUserResource($user)
+            'access_token'  => $token->plainTextToken,
+            'token_type'    => 'Bearer',
+            'expires_at'    => $token->accessToken['expires_at'],
+            'refresh_token' => $refreshToken,
+            'user'          => new AuthUserResource($user)
         ];
+    }
+
+    public static function makeRefreshToken($userId, $tokenId, $refreshToken)
+    {
+        RefreshToken::create([
+            'user_id'                  => $userId,
+            'personal_access_token_id' => $tokenId,
+            'refresh_token'            => $refreshToken
+        ]);
     }
 
     /**

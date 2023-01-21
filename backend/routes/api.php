@@ -18,7 +18,7 @@ Route::prefix('v1')->group(function () {
     });
 
     //---------Admin Routing----------
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['token-check', 'auth:sanctum'])->group(function () {
         Route::get('/user', function (Request $request) {
             return new AuthUserResource($request->user());
         });

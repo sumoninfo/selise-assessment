@@ -2,8 +2,11 @@ const ACCESS_TOKEN  = "access_token";
 const REFRESH_TOKEN = 'refresh_token';
 const EXPIRE_AT     = 'expires_at';
 
-export const getToken = () => {
+export const getToken        = () => {
     return window.localStorage.getItem(ACCESS_TOKEN);
+};
+export const getRefreshToken = () => {
+    return window.localStorage.getItem(REFRESH_TOKEN);
 };
 
 export const saveToken = token => {
@@ -16,4 +19,4 @@ export const destroyToken = () => {
     window.localStorage.removeItem(EXPIRE_AT);
 };
 
-export default {getToken, saveToken, destroyToken};
+export default {getToken, getRefreshToken, saveToken, destroyToken};

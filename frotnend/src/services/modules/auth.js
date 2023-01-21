@@ -23,6 +23,7 @@ export default function handleAuth() {
     const afterLoginRegister = (data) => {
         JwtService.saveToken(data.data.access_token);
         localStorage.setItem("expires_at", data.data.expires_at);
+        localStorage.setItem("refresh_token", data.data.refresh_token);
         ApiService.init();
         NotificationService.success(data.message);
         store.commit("auth/SETUSER", data.data.user);
