@@ -18,7 +18,7 @@ class AuthRepository implements AuthRepositoryInterface
      */
     private function tokenExpiresAt(): Carbon
     {
-        return Carbon::now()->addWeek();
+        return Carbon::now()->addMinutes(5);
     }
 
     /**
@@ -34,7 +34,7 @@ class AuthRepository implements AuthRepositoryInterface
         return [
             'access_token' => $token->plainTextToken,
             'token_type'   => 'Bearer',
-            'expires_at'   => $token->accessToken->expired_at,
+            'expires_at'   => $token->accessToken['expires_at'],
             'user'         => new AuthUserResource($user)
         ];
     }
@@ -43,7 +43,6 @@ class AuthRepository implements AuthRepositoryInterface
      * register
      *
      * @param array $data
-     * @return mixed
      */
     public function register(array $data)
     {
