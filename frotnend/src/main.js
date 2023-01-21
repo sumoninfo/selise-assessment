@@ -5,6 +5,8 @@ import store                 from './store'
 import './scss/main.scss'
 import 'bootstrap'
 
+import filters from './helpers/filters'
+
 //sweetalert2
 window.Swal  = require('sweetalert2');
 //Toast
@@ -32,8 +34,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireAuth)) {
         if (!JwtService.getToken()) {
             next({
-                name  : 'LoginPage',
-                params: {nextUrl: to.fullPath}
+                name: 'LoginPage', params: {nextUrl: to.fullPath}
             })
         }
 
@@ -56,6 +57,9 @@ router.beforeEach((to, from, next) => {
     })
 });
 
+
 const app = createApp(App)
+
+app.config.globalProperties.$filters = filters
 
 app.use(store).use(router).mount('#app')

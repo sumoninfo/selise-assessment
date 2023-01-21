@@ -15,7 +15,7 @@
               </div>
 
               <div class="d-flex justify-content-between mb-2">
-                <h6 class="text-dark mb-0">{{ book.price }}</h6>
+                <h6 class="text-dark mb-0">{{ $filters.withCurrency(book.price) }}</h6>
               </div>
             </div>
           </div>
