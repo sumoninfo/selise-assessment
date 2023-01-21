@@ -43,18 +43,12 @@ class AuthRepository implements AuthRepositoryInterface
      * register
      *
      * @param array $data
-     * @return array
+     * @return mixed
      */
     public function register(array $data)
     {
         $data['password'] = Hash::make($data['password']);
-        $user             = User::create($data);
-        $token            = $user->createToken('appToken', [], $this->tokenExpiresAt());
-        return [
-            'access_token' => $token->plainTextToken,
-            'token_type'   => 'Bearer',
-            'expires_at'   => $token->accessToken->expired_at,
-        ];
+        return User::create($data);
     }
 
     /**

@@ -65,8 +65,9 @@
 import NotificationService from "@/services/notification.service";
 import handleAuth          from "@/services/modules/auth";
 
-const {register, afterLoginRegister} = handleAuth();
+const {register} = handleAuth();
 import {ref}               from "vue";
+import {useRouter}         from "vue-router";
 
 const form = ref({
   first_name      : "",
@@ -76,12 +77,13 @@ const form = ref({
   confirm_password: ""
 });
 
-const errors = ref([])
-
+const errors         = ref([])
+const router         = useRouter()
 const registerSubmit = () => {
   register(form.value).then(({data}) => {
     errors.value = []
-    afterLoginRegister(data)
+    NotificationService.success(data.message);
+    router.push({name: "LoginPage"})
   }).catch(error => {
     errors.value = error.response.data.errors;
     NotificationService.error(error.response.data.message);
