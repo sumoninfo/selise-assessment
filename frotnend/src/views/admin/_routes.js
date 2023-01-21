@@ -6,13 +6,6 @@ const AdminRoutes = [
         meta     : {
             title: 'Admin Dashboard'
         }
-    }, {
-        path     : '/profile',
-        name     : 'Profile',
-        component: () => import('./pages/Profile'),
-        meta     : {
-            title: 'Profile'
-        }
     }
 ];
 

@@ -8,12 +8,6 @@
                         Dashboard
                     </router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link :to="{name:'Profile'}" class="nav-link active">
-                        <i class="fas fa-user"></i>
-                        Profile
-                    </router-link>
-                </li>
             </ul>
         </div>
     </nav>

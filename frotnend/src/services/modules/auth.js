@@ -23,7 +23,7 @@ export default function handleAuth() {
         localStorage.setItem("expires_at", data.data.expires_at);
         ApiService.init();
         NotificationService.success(data.message);
-        router.push({name: "AdminDashboard"})
+        router.push({name: "HomePage"})
     }
 
     return {

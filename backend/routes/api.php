@@ -26,8 +26,5 @@ Route::prefix('v1')->group(function () {
             Route::post('/logout', 'logout');
             Route::post('/refresh-token', 'refreshToken');
         });
-
-        Route::get('/dashboard-data', \App\Http\Controllers\DashboardController::class);
-
     });
 });
