@@ -31,7 +31,7 @@ import * as JwtService from "@/services/jwt.service.js";
 ApiService.init();
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requireAuth)) {
+    if (to.matched.some(record => record.meta.requireAuth) || JwtService.getToken()) {
         if (!JwtService.getToken()) {
             next({
                 name: 'LoginPage', params: {nextUrl: to.fullPath}
@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
         }
 
         ApiService.get('/user').then(response => {
-            store.commit("auth/GETUSER", response.data.data);
+            store.commit("auth/SETUSER", response.data.data);
             next()
         }).catch(error => {
             JwtService.destroyToken();

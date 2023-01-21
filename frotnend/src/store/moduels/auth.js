@@ -15,7 +15,7 @@ export default {
     actions  : {
         getUser(context) {
             ApiService.get('/user').then(response => {
-                context.commit("GETUSER", response.data.data);
+                context.commit("SETUSER", response.data.data);
             }).catch(error => {
                 console.log(error, 'error')
             }).finally(() => {
@@ -27,9 +27,6 @@ export default {
         }
     },
     mutations: {
-        GETUSER(state, data) {
-            return state.user = data
-        },
         LOADER(state, data) {
             return state.loading_user = data
         },

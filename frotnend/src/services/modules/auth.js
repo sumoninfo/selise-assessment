@@ -3,6 +3,7 @@ import ApiService          from "@/services/api.service";
 import JwtService          from "@/services/jwt.service";
 import NotificationService from "@/services/notification.service";
 import {useRouter}         from "vue-router";
+import {useStore}          from "vuex";
 
 export default function handleAuth() {
     const loading  = ref(false)
@@ -17,12 +18,14 @@ export default function handleAuth() {
     }
 
     const router = useRouter()
+    const store  = useStore()
 
     const afterLoginRegister = (data) => {
         JwtService.saveToken(data.data.access_token);
         localStorage.setItem("expires_at", data.data.expires_at);
         ApiService.init();
         NotificationService.success(data.message);
+        store.commit("auth/SETUSER", data.data.user);
         router.push({name: "HomePage"})
     }
 
