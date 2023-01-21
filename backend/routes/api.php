@@ -8,6 +8,8 @@ use App\Http\Resources\AuthUserResource;
 
 // API Routes
 Route::prefix('v1')->group(function () {
+    //
+    Route::get('fetch-books', \App\Http\Controllers\BookController::class, 'index');
 
     // login register route
     Route::controller(ApiAuthController::class)->group(function () {
