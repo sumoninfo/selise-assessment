@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
+use App\Models\Book;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -16,7 +19,8 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         return [
-            //'books' => Book::count()
+            'authors' => Author::count(),
+            'books'   => Book::count(),
         ];
     }
 }
