@@ -11,7 +11,6 @@
             <div class="col-xs-12 col-sm-8">
               <h2>{{ user.name }}</h2>
               <p><strong>Email: </strong> {{ user.email }} </p>
-              <p><strong>Phone: </strong> {{ user.phone }} </p>
               <p><strong>Created At: </strong> {{ user.created_at }} </p>
             </div>
           </div>

@@ -45,7 +45,7 @@ class ApiAuthController extends Controller
     public function register(AuthRegisterRequest $request): JsonResponse
     {
         try {
-            $response = $this->repository->register($request->only('name', 'phone', 'email', 'password'));
+            $response = $this->repository->register($request->only('first_name', 'last_name', 'email', 'password'));
             return $this->returnResponse("success", "Successfully Registration", $response);
         } catch (\Exception $exception) {
             return $this->returnResponse("error", $exception->getMessage(), [], $exception->getCode());
