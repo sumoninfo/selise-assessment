@@ -19,7 +19,7 @@ class BookFactory extends Factory
         return [
             'name'        => $this->faker->name,
             'price'       => $this->faker->randomFloat(2, 50, 1000),
-            'image'       => "{$this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])}.png",
+            'image'       => "{$this->faker->numberBetween(1, 10)}.png",
             'description' => $this->faker->paragraph,
         ];
     }
