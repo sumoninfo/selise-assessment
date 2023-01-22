@@ -45,7 +45,7 @@ class TokenCheckMiddleware
 
         if (!empty($pATExpireAt)) {
             $pATExpireAt->update([
-                'expires_at' => Carbon::now()->addSeconds(15)
+                'expires_at' => Carbon::now()->addMinutes(5)
             ]);
         }
 

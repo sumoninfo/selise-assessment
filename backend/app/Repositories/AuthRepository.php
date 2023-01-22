@@ -20,7 +20,7 @@ class AuthRepository implements AuthRepositoryInterface
      */
     private function tokenExpiresAt(): Carbon
     {
-        return Carbon::now()->addSeconds(15);
+        return Carbon::now()->addMinutes(5);
     }
 
     /**
