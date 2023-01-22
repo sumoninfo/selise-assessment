@@ -16,15 +16,19 @@ Route::prefix('v1')->group(function () {
         Route::post('/register', 'register');
         Route::post('/login', 'login');
     });
-
     //---------Admin Routing----------
-    Route::middleware(['token-check', 'auth:sanctum'])->group(function () {
-        Route::get('/user', function (Request $request) {
-            return new AuthUserResource($request->user());
+    Route::middleware('token.check')->group(function () {
+        Route::get('/token-check', function (Request $request) {
+            return $request->all();
         });
-        Route::controller(ApiAuthController::class)->group(function () {
-            Route::post('/logout', 'logout');
-            Route::post('/refresh-token', 'refreshToken');
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/user', function (Request $request) {
+                return new AuthUserResource($request->user());
+            });
+            Route::controller(ApiAuthController::class)->group(function () {
+                Route::post('/logout', 'logout');
+                Route::post('/refresh-token', 'refreshToken');
+            });
         });
     });
 });

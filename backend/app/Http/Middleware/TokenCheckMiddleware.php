@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\PersonalAccessToken;
-use Carbon\Carbon;
 use Closure;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class TokenCheckMiddleware
 {
@@ -19,6 +17,7 @@ class TokenCheckMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+//         error_log('11', 'aaaa');
         if ($request->bearerToken() && $request->header('Authorization_refreshToken')) {
             $personalAccessToken = PersonalAccessToken::findToken($request->bearerToken())->where('expires_at', '>=', now())->first();
             if (empty($personalAccessToken)) {
@@ -26,7 +25,7 @@ class TokenCheckMiddleware
 
                 if ($refreshToken) {
                     PersonalAccessToken::find($refreshToken->personal_access_token_id)->update([
-                        'expires_at' => now()->addMinute(5)
+                        'expires_at' => now()->addMinutes(5)
                     ]);
                 }
             }

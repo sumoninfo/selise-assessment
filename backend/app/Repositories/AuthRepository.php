@@ -20,7 +20,7 @@ class AuthRepository implements AuthRepositoryInterface
      */
     private function tokenExpiresAt(): Carbon
     {
-        return Carbon::now()->addMinutes(5);
+        return Carbon::now()->addSeconds(15);
     }
 
     /**
@@ -61,7 +61,6 @@ class AuthRepository implements AuthRepositoryInterface
      */
     public function register(array $data)
     {
-        $data['password'] = Hash::make($data['password']);
         return User::create($data);
     }
 
@@ -74,6 +73,7 @@ class AuthRepository implements AuthRepositoryInterface
     public function logout(Request $request): void
     {
         $request->user()->tokens()->delete();
+        User::find($request->user()->id)->refreshToken()->delete();
     }
 
     /**
