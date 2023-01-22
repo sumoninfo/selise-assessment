@@ -63,20 +63,4 @@ class ApiAuthController extends Controller
         $this->repository->logout($request);
         return $this->returnResponse("success", 'Successfully logged out');
     }
-
-    /**
-     * Refresh token generate
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function refreshToken(Request $request): JsonResponse
-    {
-        try {
-            $response = $this->repository->refreshToken($request);
-            return $this->returnResponse("success", "Refresh token generated", $response);
-        } catch (\Exception $exception) {
-            return $this->returnResponse("error", $exception->getMessage(), [], $exception->getCode());
-        }
-    }
 }

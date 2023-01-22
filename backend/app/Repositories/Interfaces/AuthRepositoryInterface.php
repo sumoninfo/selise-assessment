@@ -11,7 +11,5 @@ interface AuthRepositoryInterface
     public function register(array $data);
 
     public function logout(Request $request);
-
-    public function refreshToken(Request $request);
 }
 

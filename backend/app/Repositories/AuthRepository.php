@@ -32,10 +32,14 @@ class AuthRepository implements AuthRepositoryInterface
     public function login(Request $request): array
     {
         $user         = $request->user();
-        $refreshToken = Str::random(30);
+        $refreshToken = Str::random(30); // generate refresh token
 
+        // create access token
         $token = $user->createToken('appToken', [], $this->tokenExpiresAt());
+
+        // create refresh token
         self::makeRefreshToken($user->id, $token->accessToken->id, $refreshToken);
+
         return [
             'access_token'  => $token->plainTextToken,
             'token_type'    => 'Bearer',
@@ -45,7 +49,15 @@ class AuthRepository implements AuthRepositoryInterface
         ];
     }
 
-    public static function makeRefreshToken($userId, $tokenId, $refreshToken)
+    /**
+     * create refresh token
+     *
+     * @param $userId
+     * @param $tokenId
+     * @param $refreshToken
+     * @return void
+     */
+    public static function makeRefreshToken($userId, $tokenId, $refreshToken): void
     {
         RefreshToken::create([
             'user_id'                  => $userId,
@@ -58,6 +70,7 @@ class AuthRepository implements AuthRepositoryInterface
      * register
      *
      * @param array $data
+     * @return mixed
      */
     public function register(array $data)
     {
@@ -72,29 +85,8 @@ class AuthRepository implements AuthRepositoryInterface
      */
     public function logout(Request $request): void
     {
-        $request->user()->tokens()->delete();
-        User::find($request->user()->id)->refreshToken()->delete();
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function refresh(Request $request)
-    {
         $user = $request->user();
         $user->tokens()->delete();
-
-        $token = $user->createToken('appToken', [], $this->tokenExpiresAt());
-        return [
-            'access_token' => $token->plainTextToken,
-            'token_type'   => 'Bearer',
-            'expires_at'   => $token->accessToken->expired_at,
-        ];
-    }
-
-    public function refreshToken(Request $request)
-    {
-        // TODO: Implement refreshToken() method.
+        $user->refreshTokens()->delete();
     }
 }

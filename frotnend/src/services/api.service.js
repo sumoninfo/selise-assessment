@@ -3,9 +3,9 @@ import JwtService from "./jwt.service";
 
 const ApiService = {
     init() {
-        axios.defaults.baseURL                         = process.env.VUE_APP_API_URL + "/api/v1/";
-        axios.defaults.headers.common["Authorization"] = `Bearer ${JwtService.getToken()}`;
-        axios.defaults.headers.common["Authorization_refreshToken"] = JwtService.getRefreshToken();
+        axios.defaults.baseURL                                      = process.env.VUE_APP_API_URL + "/api/v1/";
+        axios.defaults.headers.common["Authorization"]              = `Bearer ${JwtService.getToken()}`;
+        axios.defaults.headers.common["Authorization_RefreshToken"] = JwtService.getRefreshToken();
     },
 
     get(resource, params) {

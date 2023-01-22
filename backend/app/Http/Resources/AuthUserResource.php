@@ -17,7 +17,7 @@ class AuthUserResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'name'       => $this->first_name . ' ' . $this->last_name,
+            'name'       => $this->name,
             'email'      => $this->email,
             'created_at' => Carbon::parse($this->created_at)->format('j F, Y, g:i a'),
         ];

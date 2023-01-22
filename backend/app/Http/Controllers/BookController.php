@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BookController extends Controller
 {
@@ -12,7 +13,7 @@ class BookController extends Controller
      * Handle the incoming request.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
     public function __invoke(Request $request)
     {

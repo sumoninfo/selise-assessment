@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    protected $appends = ['name'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -57,10 +60,21 @@ class User extends Authenticatable
         );
     }
 
+
     /**
-     * Get the books for the author.
+     * Get the user's full name.
+     *
+     * @return string
      */
-    public function refreshToken()
+    public function getNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Get the refreshTokens for the user.
+     */
+    public function refreshTokens(): HasMany
     {
         return $this->hasMany(RefreshToken::class);
     }
