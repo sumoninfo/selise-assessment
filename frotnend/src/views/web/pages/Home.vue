@@ -28,7 +28,7 @@
 <script setup>
 import {onMounted, ref}    from "vue";
 import NotificationService from "@/services/notification.service";
-import handleBook          from "@/services/modules/book";
+import handleBook          from "@/composables/book";
 
 const {fetchBooks} = handleBook();
 const books        = ref([])

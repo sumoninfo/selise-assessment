@@ -13,9 +13,9 @@
 
 <script setup>
 import NotificationService from "@/services/notification.service";
-import JwtService          from "@/services/jwt.service";
-import handleAuth          from "@/services/modules/auth";
-import {useRouter}         from "vue-router";
+import JwtService  from "@/services/jwt.service";
+import handleAuth  from "@/composables/auth";
+import {useRouter} from "vue-router";
 import {useStore}          from "vuex";
 
 const {logout} = handleAuth();

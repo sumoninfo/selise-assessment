@@ -63,7 +63,7 @@
 
 <script setup>
 import NotificationService from "@/services/notification.service";
-import handleAuth          from "@/services/modules/auth";
+import handleAuth          from "@/composables/auth";
 
 const {register} = handleAuth();
 import {ref}               from "vue";
