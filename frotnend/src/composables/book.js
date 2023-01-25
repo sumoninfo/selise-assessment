@@ -3,8 +3,8 @@ import ApiService from "@/services/api.service";
 
 export default function handleBook() {
     const loading    = ref(false)
-    const fetchBooks = () => {
-        return ApiService.get('/fetch-books')
+    const fetchBooks = (query) => {
+        return ApiService.get('/fetch-books', {params:query})
     }
 
     return {

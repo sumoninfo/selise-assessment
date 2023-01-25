@@ -15,9 +15,17 @@ class BookController extends Controller
      * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): AnonymousResourceCollection
     {
-        $books = Book::with('author')->paginate(8);
+        $query = Book::with('author');
+        if ($request->filled('search')) {
+            $query->where('name', 'LIKE', "%{$request->search}%");
+        }
+        if ($request->per_page == 'all') {
+            $request->merge(['per_page' => $query->count()]);
+        }
+
+        $books = $query->latest()->paginate($request->get('per_page', config('constant.pagination')));
         return BookResource::collection($books);
     }
 }
